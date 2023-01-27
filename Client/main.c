@@ -5,6 +5,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define BUF_SIZE 256
+
 void err_handling(char * arg) {
     printf("%s\n", arg);
     exit(1);  
@@ -13,6 +15,9 @@ void err_handling(char * arg) {
 int main(int argc, char *argv[]) {
     int sock;
     struct sockaddr_in serv_addr;
+    char recv_msg[BUF_SIZE];
+    char transmit_msg[BUF_SIZE];
+
     if(argc != 3) {
         printf("Usage : %s <SERVER IP> <PORT>\n", argv[0]);
         exit(1);
@@ -29,10 +34,16 @@ int main(int argc, char *argv[]) {
 
     if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1)
         err_handling("CONNECT() ERROR");
-    while(1) {
-    write(sock, "hello", sizeof("hello"));
-    write(sock, "hello", sizeof("hello"));
-    write(sock, "hello", sizeof("hello"));
-    write(sock, "hello", sizeof("hello"));
-    }
+    
+    // write(sock, "hello", sizeof("hello"));
+    read(sock, recv_msg, sizeof(recv_msg)-1);
+    printf("%s", recv_msg);
+
+    scanf("%s", transmit_msg);
+    write(sock, transmit_msg, sizeof(transmit_msg));
+
+    
+
+
+
 }
