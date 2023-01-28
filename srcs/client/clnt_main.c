@@ -1,4 +1,4 @@
-// #include <stdio.h>
+#include <stdio.h>
 // #include <stdlib.h> // atoi
 // #include <string.h> // memset
 #include <unistd.h> // sockaddr_in, read, write
@@ -8,20 +8,19 @@
 #include "./../../head/define.h"
 #include "./../../head/untils.h"
 
-#define BUF_SIZE 256
-
-int is_server_info_socket;
-int g_server_socket;
 
 int main(int argc, char *argv[]) {
-    if(argc != 2) 
-        sniffied(SCN_ERROR_INFO_SOCKET);
-
-    struct sockaddr_in serv_addr, clnt_addr;
-    is_server_info_socket = NONE_INFO_SOCKET;
-
-    start_tcp_server(argv, &serv_addr, &clnt_addr, 5);
+    if(argc != 3) 
+        sniffied(SCN_ERROR_INFO_CLIENT_SOCKET);
     
+    struct sockaddr_in serv_addr;
+    char SWICH[BUF_SIZE];
+
+    connect_tcp_server(argv, &serv_addr);
+    
+    func_swich(SWICH_MAIN_MENU);
+    while(TRUE) {
+        scanf(" %[^\n]s", SWICH);
+        func_swich(SWICH);
+    }
 }
-
-
